@@ -1,0 +1,35 @@
+import cv2
+import numpy as np
+import pandas as pd
+from BasePrinter import base_printer
+from DataTypePrinter import data_type_printer
+
+print("Enter the size of the QR code you want: (min: 21)")
+size = int(input())
+while(size < 21):
+    print("Invalid size! give input again")
+    size = int(input())
+size += 2
+
+base_qr = np.full((size,size),255)
+
+base_printer(base_qr,size)
+
+print("What kind of data you want to encode in the QR Code?")
+print("1.Binary\n2.Alphanumeric\n3.Numerical\n4.Japanese kanji")
+encode_type = int(input())
+while(encode_type < 1 or encode_type > 4):
+    print("Invalid choice. Please choose again")
+    print("1.Numeric\n2.Alphanumeric\n3.Binary\n4.Japanese kanji")
+    encode_type = int(input())
+print("What name do you want your QRcode to have? (just the name, without any extentions)")
+qr_name = str(input())
+qr_name = qr_name + '.png'
+
+data_type_printer(base_qr,size,encode_type)
+
+cv2.imwrite(qr_name,base_qr)
+
+print("Enter the message that you want to encode: ")
+data = str(input())
+length = bin(len(data))[2:]

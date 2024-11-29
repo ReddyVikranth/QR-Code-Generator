@@ -8,6 +8,8 @@ from MasahiroHara import masahiro_hara
 from QuiteZone import quite_zone
 from Isolation import isolation
 from FormatStrips import format_strips
+from CharactersLength import characters_length
+from FinalCut import final_cut
 print("Enter the size of the QR code you want: (min: 21)")
 size = int(input())
 while(size < 21):
@@ -35,8 +37,12 @@ isolation(base_qr,size)
 timing_strips(base_qr,size)
 format_strips(base_qr,size)
 masahiro_hara(base_qr,size)
-cv2.imwrite(qr_name,base_qr)
+
 
 print("Enter the message that you want to encode: ")
 data = str(input())
-length = bin(len(data))[2:]
+characters_length(base_qr,len(data),size)
+final_cut(base_qr,size)
+base_qr[size-11,size-2] = 0
+base_qr[size-11,size-3] = 0
+cv2.imwrite(qr_name,base_qr)

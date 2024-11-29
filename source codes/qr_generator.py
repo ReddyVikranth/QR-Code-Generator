@@ -3,7 +3,11 @@ import numpy as np
 import pandas as pd
 from BasePrinter import base_printer
 from DataTypePrinter import data_type_printer
-
+from TimingStrips import timing_strips
+from MasahiroHara import masahiro_hara
+from QuiteZone import quite_zone
+from Isolation import isolation
+from FormatStrips import format_strips
 print("Enter the size of the QR code you want: (min: 21)")
 size = int(input())
 while(size < 21):
@@ -25,9 +29,12 @@ while(encode_type < 1 or encode_type > 4):
 print("What name do you want your QRcode to have? (just the name, without any extentions)")
 qr_name = str(input())
 qr_name = qr_name + '.png'
-
+quite_zone(base_qr,size)
 data_type_printer(base_qr,size,encode_type)
-
+isolation(base_qr,size)
+timing_strips(base_qr,size)
+format_strips(base_qr,size)
+masahiro_hara(base_qr,size)
 cv2.imwrite(qr_name,base_qr)
 
 print("Enter the message that you want to encode: ")
